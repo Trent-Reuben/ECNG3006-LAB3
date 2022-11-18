@@ -42,7 +42,7 @@ void app_main(void)
 	xSemaphoreGive(xMutex);
 
     //stub to set gpio pin off
-    printf("Setting gpio high...");
+    printf("Setting gpio high...\n");
     gpio_set_level(GPIO_OUTPUT_IO,0);
     vTaskDelay(3000 / portTICK_RATE_MS);
     //create task to turn gpio pin on
