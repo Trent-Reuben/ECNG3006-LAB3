@@ -10,4 +10,4 @@ Expected: status of gpio pin is shown
 
 Test Results: status of gpio pin displayed
 
-Test Result Evidence: unit_test_3.png
+Test Result Evidence: lab3_unit_test_3.out
