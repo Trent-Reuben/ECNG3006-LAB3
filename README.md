@@ -1,4 +1,4 @@
-##Unit Test 1: Set GPIO2 pin high (turn LED ON)
+## Unit Test 1: Set GPIO2 pin high (turn LED ON) 
 
 Purpose: Test to ensure the function sets the gpio pin high 
 
