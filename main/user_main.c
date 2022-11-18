@@ -20,9 +20,6 @@ SemaphoreHandle_t xMutex = NULL;
 
 void app_main(void)
 {
-
-	//Create mutex type semaphore
-    xMutex = xSemaphoreCreateMutex();
 	
     gpio_config_t io_conf;
     //disable interrupt
@@ -49,8 +46,6 @@ void app_main(void)
     gpio_set_level(GPIO_OUTPUT_IO,1);
     //create task to turn gpio pin on
     xTaskCreate(gpio_on, "gpio_on", 2042, NULL, 1, NULL);
-    //stub to set gpio pin off
-    gpio_set_level(GPIO_OUTPUT_IO,1);
 
     //for heap memory management
 	for(;;);
