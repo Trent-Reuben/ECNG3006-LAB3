@@ -9,7 +9,7 @@ Pre-Conditions: 3V to esp8266-01, working LED
 Test Input: Conifgured GPIO2 pin, gpio pin set to 0, call 'status_msg' function
 Expected: status of gpio pin is shown
 Test Results: status of gpio pin displayed
-Test Result Evidence: unit_test_3.png
+Test Result Evidence: lab3_unit_test_3.out
 
 */
 
@@ -37,7 +37,7 @@ void app_main(void)
     gpio_config(&io_conf);
 
     //stub to set gpio pin on
-    printf("Turning LED ON...");
+    printf("Turning LED ON...\n");
     gpio_set_level(GPIO_OUTPUT_IO,0);  
     vTaskDelay(1000 / portTICK_RATE_MS);
     //tasks to call status message
