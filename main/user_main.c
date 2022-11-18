@@ -1,80 +1,36 @@
-/* gpio example
+/*Lab3
+Name: TrentReuben
+I.D.:  816015091
 
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
+Unit Test 1: Set GPIO2 pin high (turn LED ON)
 
-   Unless required by applicable law or agreed to in writing, this
-   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-   CONDITIONS OF ANY KIND, either express or implied.
+Purpose: Test to ensure the function sets the gpio pin high 
+Pre-Conditions: 3V to esp8266-01, working LED
+Test Input: Conifgured GPIO2 pin, gpio pin set to 0, call 'gpio_on' function
+Expected: LED turns on 
+Test Results: LED turned on 
+Test Result Evidence: lab3_unit_test_1.out, lab3_unit_test_1.png
 */
 
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
-
-#include "driver/gpio.h"
-
-#include "esp_log.h"
-#include "esp_system.h"
+#include "main.h"
 
 static const char *TAG = "main";
 
-/**
- * Brief:
- * This test code shows how to configure gpio and how to use gpio interrupt.
- *
- * GPIO status:
- * GPIO15: output
- * GPIO16: output
- * GPIO4:  input, pulled up, interrupt from rising edge and falling edge
- * GPIO5:  input, pulled up, interrupt from rising edge.
- *
- * Test:
- * Connect GPIO15 with GPIO4
- * Connect GPIO16 with GPIO5
- * Generate pulses on GPIO15/16, that triggers interrupt on GPIO4/5
- *
- */
-
-#define GPIO_OUTPUT_IO_0    15
-#define GPIO_OUTPUT_IO_1    16
-#define GPIO_OUTPUT_PIN_SEL  ((1ULL<<GPIO_OUTPUT_IO_0) | (1ULL<<GPIO_OUTPUT_IO_1))
-#define GPIO_INPUT_IO_0     4
-#define GPIO_INPUT_IO_1     5
-#define GPIO_INPUT_PIN_SEL  ((1ULL<<GPIO_INPUT_IO_0) | (1ULL<<GPIO_INPUT_IO_1))
-
-static xQueueHandle gpio_evt_queue = NULL;
-
-static void gpio_isr_handler(void *arg)
-{
-    uint32_t gpio_num = (uint32_t) arg;
-    xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
-}
-
-static void gpio_task_example(void *arg)
-{
-    uint32_t io_num;
-
-    for (;;) {
-        if (xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
-            ESP_LOGI(TAG, "GPIO[%d] intr, val: %d\n", io_num, gpio_get_level(io_num));
-        }
-    }
-}
+SemaphoreHandle_t xMutex = NULL;
 
 void app_main(void)
 {
+
+	//Create mutex type semaphore
+    xMutex = xSemaphoreCreateMutex();
+	
     gpio_config_t io_conf;
     //disable interrupt
     io_conf.intr_type = GPIO_INTR_DISABLE;
     //set as output mode
     io_conf.mode = GPIO_MODE_OUTPUT;
     //bit mask of the pins that you want to set,e.g.GPIO15/16
-    io_conf.pin_bit_mask = GPIO_OUTPUT_PIN_SEL;
+    io_conf.pin_bit_mask = (1ULL<<GPIO_OUTPUT_IO);
     //disable pull-down mode
     io_conf.pull_down_en = 0;
     //disable pull-up mode
@@ -82,44 +38,73 @@ void app_main(void)
     //configure GPIO with the given settings
     gpio_config(&io_conf);
 
-    //interrupt of rising edge
-    io_conf.intr_type = GPIO_INTR_POSEDGE;
-    //bit mask of the pins, use GPIO4/5 here
-    io_conf.pin_bit_mask = GPIO_INPUT_PIN_SEL;
-    //set as input mode
-    io_conf.mode = GPIO_MODE_INPUT;
-    //enable pull-up mode
-    io_conf.pull_up_en = 1;
-    gpio_config(&io_conf);
+    printf("\n");
 
-    //change gpio intrrupt type for one pin
-    gpio_set_intr_type(GPIO_INPUT_IO_0, GPIO_INTR_ANYEDGE);
+    //Create mutex type semaphore
+    xMutex = xSemaphoreCreateMutex();
+    //GIve semaphore
+	xSemaphoreGive(xMutex);
 
-    //create a queue to handle gpio event from isr
-    gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
-    //start gpio task
-    xTaskCreate(gpio_task_example, "gpio_task_example", 2048, NULL, 10, NULL);
+    //stub to set gpio pin off
+    gpio_set_level(GPIO_OUTPUT_IO,1);
+    //create task to turn gpio pin on
+    xTaskCreate(gpio_on, "gpio_on", 2042, NULL, 1, NULL);
+    //stub to set gpio pin off
+    gpio_set_level(GPIO_OUTPUT_IO,1);
 
-    //install gpio isr service
-    gpio_install_isr_service(0);
-    //hook isr handler for specific gpio pin
-    gpio_isr_handler_add(GPIO_INPUT_IO_0, gpio_isr_handler, (void *) GPIO_INPUT_IO_0);
-    //hook isr handler for specific gpio pin
-    gpio_isr_handler_add(GPIO_INPUT_IO_1, gpio_isr_handler, (void *) GPIO_INPUT_IO_1);
-
-    //remove isr handler for gpio number.
-    gpio_isr_handler_remove(GPIO_INPUT_IO_0);
-    //hook isr handler for specific gpio pin again
-    gpio_isr_handler_add(GPIO_INPUT_IO_0, gpio_isr_handler, (void *) GPIO_INPUT_IO_0);
-
-    int cnt = 0;
-
-    while (1) {
-        ESP_LOGI(TAG, "cnt: %d\n", cnt++);
-        vTaskDelay(1000 / portTICK_RATE_MS);
-        gpio_set_level(GPIO_OUTPUT_IO_0, cnt % 2);
-        gpio_set_level(GPIO_OUTPUT_IO_1, cnt % 2);
-    }
+    //for heap memory management
+	for(;;);
 }
 
 
+//This task set the gpio high, active delays for 0.5s and then task delays for 1s
+static void gpio_on(void* arg)
+{
+    for (;;)
+    {
+        //Try to take semaphore.
+        while(true)
+        {
+            if(xSemaphoreTake(xMutex, (TickType_t) 10) == pdTRUE)
+            {
+                //if mutex is obtained display the foll. message
+                ESP_LOGI("Task: gpio_on", "Setting GPIO2 high. \n");
+                gpio_set_level(GPIO_OUTPUT_IO,0);
+                break;
+            }else
+            {
+                continue;
+            }
+        }
+
+        //0.5s active delay
+        active_wait();
+
+        //the mutex must be given back
+        xSemaphoreGive(xMutex);
+        //1s delay
+        vTaskDelay(1000 / portTICK_RATE_MS);
+    }
+}
+
+static void active_wait()
+{
+    //0.5s active delay
+    struct timeval tv_now;
+    gettimeofday(&tv_now, NULL);    
+    int64_t time_start = (int64_t)tv_now.tv_sec * 1000000L + (int64_t)tv_now.tv_usec; //time since last reset in us
+
+    while(true)
+    {
+        gettimeofday(&tv_now, NULL);    
+        int64_t time_now = (int64_t)tv_now.tv_sec * 1000000L + (int64_t)tv_now.tv_usec;
+
+        //if 0.5s has elapsed
+        if((time_now - time_start) >= 500000)
+        {
+            break;
+        }
+    }
+
+    printf("0.5s active wait complete. \n" );
+}
