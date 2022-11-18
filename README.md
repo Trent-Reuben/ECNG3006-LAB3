@@ -1,5 +1,15 @@
 Verification Test: Verifying the system meets the specified requirements
 
+Purpose: To test the system to ensure it meets the requirements and specification
+
+Test Input: Conifgured GPIO2 pin, call gpio_on, call status_msg, call gpio_off
+
+Expected: LED light turns on, status message is diplayed, LED light turns off, status message displayed
+
+Test Results: LED light turns on, status message is diplayed, LED light turns off, status message displayed
+
+Test Result Evidence: lab3_verificationtest.out
+
 Requirements: 
 1. A task turns the GPIO pin on
 2. A task turn the GPIO pin off
@@ -11,13 +21,5 @@ Specification:
 - The system will run as defined by the order 1.gpio_on; 2. status message 3.gpio_off; 4.status message
 
 
-Purpose: To test the system to ensure it meets the requirements and specification
 
-Test Input: Conifgured GPIO2 pin, call gpio_on, call status_msg, call gpio_off
-
-Expected: LED light turns on, status message is diplayed, LED light turns off, status message displayed
-
-Test Results: LED light turns on, status message is diplayed, LED light turns off, status message displayed
-
-Test Result Evidence: lab3_verificationtest.out
 
