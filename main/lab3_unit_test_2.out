@@ -1,0 +1,61 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2022.11.18 15:57:06 =~=~=~=~=~=~=~=~=~=~=~=
+ ets Jan  8 2013,rst cause:2, boot mode:(3,6)
+
+load 0x40100000, len 7036, room 16 
+tail 12
+chksum 0x42
+ho 0 tail 12 room 4
+load 0x3ffe8408, len 24, room 12 
+tail 12
+chksum 0xfb
+ho 0 tail 12 room 4
+load 0x3ffe8420, len 3324, room 12 
+tail 0
+chksum 0xc9
+csum 0xc9
+[0;32mI (48) boot: ESP-IDF v3.4-63-ga192988b 2nd stage bootloader[0m
+[0;32mI (49) boot: compile time 15:48:10[0m
+[0;32mI (49) boot: SPI Speed      : 40MHz[0m
+[0;32mI (55) boot: SPI Mode       : DIO[0m
+[0;32mI (61) boot: SPI Flash Size : 1MB[0m
+[0;32mI (67) boot: Partition Table:[0m
+[0;32mI (73) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (84) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (96) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (107) boot:  2 factory          factory app      00 00 00010000 000f0000[0m
+[0;32mI (119) boot: End of partition table[0m
+[0;32mI (125) esp_image: segment 0: paddr=0x00010010 vaddr=0x40210010 size=0x161d4 ( 90580) map[0m
+[0;32mI (176) esp_image: segment 1: paddr=0x000261ec vaddr=0x402261e4 size=0x05964 ( 22884) map[0m
+[0;32mI (186) esp_image: segment 2: paddr=0x0002bb58 vaddr=0x3ffe8000 size=0x003dc (   988) load[0m
+[0;32mI (188) esp_image: segment 3: paddr=0x0002bf3c vaddr=0x40100000 size=0x00080 (   128) load[0m
+[0;32mI (201) esp_image: segment 4: paddr=0x0002bfc4 vaddr=0x40100080 size=0x04558 ( 17752) load[0m
+[0;32mI (222) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (243) gpio: GPIO[2]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+Setting gpio high...
+[0;32mI (3257) Task: gpio_off: Setting GPIO2 low. 
+[0m
+0.5s active wait complete. 
+[0;32mI (4757) Task: gpio_off: Setting GPIO2 low. 
+[0m
+0.5s active wait complete. 
+[0;32mI (6257) Task: gpio_off: Setting GPIO2 low. 
+[0m
+0.5s active wait complete. 
+[0;32mI (7757) Task: gpio_off: Setting GPIO2 low. 
+[0m
+0.5s active wait complete. 
+[0;32mI (9257) Task: gpio_off: Setting GPIO2 low. 
+[0m
+0.5s active wait complete. 
+[0;32mI (10758) Task: gpio_off: Setting GPIO2 low. 
+[0m
+0.5s active wait complete. 
+[0;32mI (12258) Task: gpio_off: Setting GPIO2 low. 
+[0m
+0.5s active wait complete. 
+[0;32mI (13758) Task: gpio_off: Setting GPIO2 low. 
+[0m
+0.5s active wait complete. 
+[0;32mI (15258) Task: gpio_off: Setting GPIO2 low. 
+[0m
+ 
