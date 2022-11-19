@@ -52,6 +52,6 @@ The following requirements were verified:
 2. A task turn the GPIO pin off
 3. The GPIO pin should be managed using a semaphore/mutex.
 4. The third task will print a status message only for each iteration of change in GPIO.
-5. Each task should have it's own priority level in the following order (1.gpio_on; 2. status message 3.gpio_off; 4.status message)
+5. Each task should have its own priority level in the following order (1.gpio_on; 2. status message 3.gpio_off; 4.status message)
 
 Because the basic operation of the functions to turn on and turn off the LED on the ESP8266 were verified, no additional equipment was required. The testing was carried out using the format from unit testing as seen in the "VerificationTest" branch.
