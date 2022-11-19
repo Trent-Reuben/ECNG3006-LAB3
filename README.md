@@ -10,7 +10,7 @@ For larger projects however, branching strategies such as [GitHub flow](https://
 ## Unit Testing
 **All information regarding the actual tests carried out are provided in the corresponding branch.**  
 
-For unit testing, the functions were tested using stubs to simulate the environment they would alter. It is important to note that the testing was carried out for the basic operations of the functions, i.e., turn on LED, turn off LED and display a status message of the gpio pin. Any timings were not considered for this unit test. The unit testing was structured such that the function was called and the output was observed based on the expected outcome. For example, to unit test the "status_msg function", the gpio level was set giving a simulated environment and the function was called. When the function was called, it was expected that the function would display the status of the gpio pin. Hence the unit tests were structured using the following prompts:
+For unit testing, the functions were tested using stubs to simulate the environment they would alter. It is important to note that the testing was carried out for the basic operations of the functions, i.e., turn on LED, turn off LED and display a status message of the gpio pin. Any timings were not considered for the unit tests. The unit testing was structured such that the function was called and the output was observed based on the expected outcome. For example, to unit test the "status_msg function", the gpio level was set giving a simulated environment and the function was called. When the function was called, it was expected that the function would display the status of the gpio pin. Hence the unit tests were structured using the following prompts:
 
 Purpose:   
 Pre-Conditions:      
@@ -40,7 +40,7 @@ Test Results: LED light turns on, status message is diplayed
 
 Test Result Evidence: lab3_integrationtest.out 
 
-However, for this exercise, only one integration test was carried out as gpio_on and gpio_off are essentially the reverse of each other. Considering this, once the "status_msg" function worked with either, therefore, complete integration of all the functions would work. Similarily to the unit test, the test was carried out to test the basic operations as above. A [driver/stub](https://www.geeksforgeeks.org/difference-between-stubs-and-drivers/) was not used as the nature of the test did not require it. This is so given drivers are used in place of modules not yet developed. In this instance, all modules required were available.  As discussed in unit testing, there are frameworks that can be implemented for larger scope projects.
+However, for this exercise, only one integration test was carried out as gpio_on and gpio_off are essentially the reverse of each other. Considering this, once the "status_msg" function worked with either, therefore, complete integration of all the functions would work. Similarily to the unit test, the test was carried out to test the basic operations as above. A [driver/stub](https://www.geeksforgeeks.org/difference-between-stubs-and-drivers/) was not used as the nature of the test did not require it. Due to drivers being used in place of modules not yet developed, it was not needed. In this instance, all modules required were available.  As discussed in unit testing, there are frameworks that can be implemented for larger scope projects.
 
 ## Verification Testing
 
